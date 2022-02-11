@@ -1,0 +1,94 @@
+# Python3 manifest example
+
+loader.preload = "file:{{ gramine.libos }}" # for compatibility with v1.0
+
+loader.entrypoint = "file:{{ gramine.libos }}"
+libos.entrypoint = "{{ entrypoint }}"
+
+loader.log_level = "{{ log_level }}"
+
+loader.env.LD_LIBRARY_PATH = "{{ python.stdlib }}/lib:/gramine_lib:/blender_lib:/lib:{{ arch_libdir }}:/usr/lib:/usr/{{ arch_libdir }}"
+
+loader.insecure__use_cmdline_argv = true
+
+sys.enable_sigterm_injection = true
+
+fs.mount.lib.type = "chroot"
+fs.mount.lib.path = "/lib"
+fs.mount.lib.uri = "file:{{ gramine.runtimedir() }}"
+
+fs.mount.lib2.type = "chroot"
+fs.mount.lib2.path = "{{ arch_libdir }}"
+fs.mount.lib2.uri = "file:{{ arch_libdir }}"
+
+fs.mount.usr.type = "chroot"
+fs.mount.usr.path = "/usr"
+fs.mount.usr.uri = "file:/usr"
+
+fs.mount.pyhome.type = "chroot"
+fs.mount.pyhome.path = "{{ python.stdlib }}"
+fs.mount.pyhome.uri = "file:{{ python.stdlib }}"
+
+fs.mount.pydisthome.type = "chroot"
+fs.mount.pydisthome.path = "{{ python.distlib }}"
+fs.mount.pydisthome.uri = "file:{{ python.distlib }}"
+
+fs.mount.gramine_lib.type = "chroot"
+fs.mount.gramine_lib.path = "/gramine_lib"
+fs.mount.gramine_lib.uri = "file:{{ gramine.runtimedir() }}"
+
+fs.mount.blender_lib.type = "chroot"
+fs.mount.blender_lib.path = "/blender_lib"
+fs.mount.blender_lib.uri = "file:{{ blender_dir }}/lib"
+
+fs.mount.tmp.type = "chroot"
+fs.mount.tmp.path = "/tmp"
+fs.mount.tmp.uri = "file:/tmp"
+
+fs.mount.etc.type = "chroot"
+fs.mount.etc.path = "/etc"
+fs.mount.etc.uri = "file:/etc"
+
+fs.mount.scenes.type = "chroot"
+fs.mount.scenes.path = "/data"
+fs.mount.scenes.uri = "file:{{ data_dir }}"
+
+fs.mount.blender.type = "chroot"
+fs.mount.blender.path = "/blender"
+fs.mount.blender.uri = "file:{{ blender_dir }}"
+
+sgx.debug = true
+sgx.nonpie_binary = true
+sgx.enclave_size = "2048M"
+sys.stack.size = "8M"
+sgx.thread_num = 64
+
+sgx.trusted_files = [
+  "file:{{ gramine.libos }}",
+  "file:{{ entrypoint }}",
+  "file:{{ gramine.runtimedir() }}/",
+  "file:{{ arch_libdir }}/",
+  "file:/usr/{{ arch_libdir }}/",
+  "file:{{ python.stdlib }}/",
+  "file:{{ python.distlib }}/",
+  "file:{{ blender_dir }}/blender",
+  "file:{{ blender_dir }}/lib/",
+  "file:scripts/",
+  "file:/etc/mime.types",
+  "file:/etc/default/apport",
+]
+
+sgx.allowed_files = [
+  "file:/etc/nsswitch.conf",
+  "file:/etc/ethers",
+  "file:/etc/hosts",
+  "file:/etc/group",
+  "file:/etc/passwd",
+  "file:/etc/gai.conf",
+  "file:/etc/host.conf",
+  "file:/etc/resolv.conf",
+  "file:/tmp",
+  "file:{{ blender_dir }}/{{ blender_ver }}/",
+  "file:{{ data_dir }}/scenes/",
+  "file:{{ data_dir }}/images/",
+]

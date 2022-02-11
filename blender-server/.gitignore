@@ -1,0 +1,8 @@
+*.manifest
+*.manifest.sgx
+*.sig
+*.token
+
+/blender.tar.xz
+/blender_dir/
+/run_dir/
