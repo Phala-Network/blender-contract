@@ -6,9 +6,9 @@ This repository shows how to use Phala Fat Contract to invoke unmodified x86 pro
 
 It contains three components:
 
-- `blender-server`: Unmodified Blender 2.8.2 wrapped by a Python HTTP server, as the rendering server. The blender-server is supposed to be executed inside the TEE (in this case, Intel SGX), so the model and the final image/video is confidential. This program is powered by the [Gramine project](https://github.com/gramineproject/gramine).
+- `blender-server`: Unmodified Blender 2.8.2 wrapped by a Python HTTP server, as the rendering server. The blender-server is supposed to be executed inside the TEE (in this case, Intel SGX), so the model and the final image/video are confidential. This program is powered by the [Gramine project](https://github.com/gramineproject/gramine).
 
-- `fat-client`: A Phala Fat Contract to communicate to the rendering server through its unique HTTP request capability. The contract is executed inside Phala's Secure Worker that is powered by TEE, so its input and state are kept secret.
+- `fat-client`: A Phala Fat Contract to communicate with the rendering server through its unique HTTP request capability. The contract is executed inside Phala's Secure Worker that is powered by TEE, so its input and state are kept secret.
 
     > It is worth noting that HTTPS should be used in production environment for end-to-end encryption of all the traffic between client and server. A promising solution is the [RA-TLS](https://graphene.readthedocs.io/en/latest/attestation.html#mid-level-ra-tls-interface) from Gramine.
 

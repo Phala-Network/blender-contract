@@ -7,6 +7,7 @@ Ubuntu 20.04 is recommended.
 Refer to Gramine's [tutorial](https://graphene.readthedocs.io/en/latest/quickstart.html) for SGX driver and Gramine installation.
 
 > We strongly recommend to use Linux kernel >=5.11 for the in-kernel SGX driver. `/dev/sgx_enclave` should be presented for DCAP-compatible devices if you successfully install the driver (`/dev/isgx` for legacy EPID devices).
+> Also, `gramine-oot` instead of `gramine` should be installed for EPID devices.
 
 ## Dependencies Installation
 
