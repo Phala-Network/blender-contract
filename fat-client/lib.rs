@@ -10,8 +10,7 @@ mod fat_client {
     use alloc::format;
     use alloc::string::String;
     use alloc::vec::Vec;
-    use pink::chain_extension::HttpRequest;
-    use pink::PinkEnvironment;
+    use pink::{http_get, PinkEnvironment};
 
     #[ink(storage)]
     pub struct FatClient {
@@ -20,22 +19,22 @@ mod fat_client {
 
     impl FatClient {
         #[ink(constructor)]
-        pub fn new(render_server: String) -> Self {
-            Self { render_server }
+        pub fn new() -> Self {
+            Self {
+                render_server: Default::default(),
+            }
         }
 
         #[ink(message)]
-        pub fn upload_blend_model(&self, data: Vec<u8>) -> (u16, Vec<u8>) {
-            let tmp_filename = String::from("input.blend");
-            let url = format!("{}/{}", self.render_server, tmp_filename);
-            let request = HttpRequest {
-                url,
-                method: "PUT".into(),
-                headers: Default::default(),
-                body: data,
-            };
+        pub fn set_render_server(&mut self, render_server: String) {
+            self.render_server = render_server;
+        }
 
-            let response = self.env().extension().http_request(request);
+        #[ink(message)]
+        pub fn render(&self, file: String) -> (u16, Vec<u8>) {
+            let path = String::from("render");
+            let url = format!("{}/{}?filename={}", self.render_server, path, file);
+            let response = http_get!(url);
             (response.status_code, response.body)
         }
     }
