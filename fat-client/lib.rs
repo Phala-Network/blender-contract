@@ -31,6 +31,11 @@ mod fat_client {
         }
 
         #[ink(message)]
+        pub fn get_render_server(&self) -> String {
+            self.render_server.clone()
+        }
+
+        #[ink(message)]
         pub fn render(&self, file: String) -> (u16, Vec<u8>) {
             let path = String::from("render");
             let url = format!("{}/{}?filename={}", self.render_server, path, file);
