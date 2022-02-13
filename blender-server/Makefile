@@ -67,7 +67,7 @@ clean:
 	$(RM) *.manifest *.manifest.sgx *.token *.sig OUTPUT* *.PID TEST_STDOUT TEST_STDERR
 	$(RM) -r scripts/__pycache__
 	$(RM) -r \
-		$(RUN_DIR) $(DATA_DIR)/images blender.manifest blender.manifest.sgx blender.sig \
+		$(RUN_DIR) $(DATA_DIR)/images $(DATA_DIR)/scenes/*.blend blender.manifest blender.manifest.sgx blender.sig \
 		blender.token
 
 .PHONY: distclean
